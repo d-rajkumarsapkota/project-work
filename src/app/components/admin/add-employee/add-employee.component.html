@@ -1,0 +1,243 @@
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="border-warning border-bottom pb-3 mb-4">Registration Form</h1>        
+        <div class="alert alert-danger alert-dismissible" *ngIf="internalError">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong> Internal server error. Please try again. </strong>
+        </div>
+        <form [formGroup]="addEmpForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col justify-content-md-center">
+                    <div class="form-group row">
+                        <label title="Employee Number" class="col-sm-3 col-form-label" for="empNo">Employee No*:</label>
+                        <div class="col-sm-9">
+                            <input autofocus title="Employee Number" formControlName="empIdNumber" type="text"
+                                class="form-control" id="empNo"
+                                [ngClass]="{ 'is-invalid': submitted && f.empIdNumber.errors }">
+                            <div *ngIf="submitted && f.empIdNumber.errors" class="text-danger">
+                                <span *ngIf="f.empIdNumber.errors.required">Employee Number required</span>
+                                <span *ngIf="f.empIdNumber.errors.notUnique">Employee number matching with existing employee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="First Name" class="col-sm-3 col-form-label" for="firstName">First Name*:</label>
+                        <div class="col-sm-9">
+                            <input title="First Name" formControlName="empFirstName" type="text" class="form-control"
+                                id="firstName" [ngClass]="{ 'is-invalid': submitted && f.empFirstName.errors }">
+                            <div *ngIf="submitted && f.empFirstName.errors" class="text-danger">
+                                <span *ngIf="f.empFirstName.errors.required">First Name required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Last Name" class="col-sm-3 col-form-label" for="lastName">Last Name*:</label>
+                        <div class="col-sm-9">
+                            <input title="Last Name" formControlName="empLastName" type="text" class="form-control"
+                                id="lastName" [ngClass]="{ 'is-invalid': submitted && f.empLastName.errors }">
+                            <div *ngIf="submitted && f.empLastName.errors" class="text-danger">
+                                <span *ngIf="f.empLastName.errors.required">Last Name required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Gender*:</label>
+                        <div class="col-sm-9 mt-2">
+                            <label class="mb-0 mr-3">
+                                <input title="Male" type="radio" class="mr-1" value="Male" formControlName="empGender">
+                                Male
+                            </label>
+                            <label class="mb-0 mr-3">
+                                <input title="Female" type="radio" class="mr-1" value="Female"
+                                    formControlName="empGender"> Female
+                            </label>
+                            <div *ngIf="submitted && f.empGender.errors" class="text-danger">
+                                <span *ngIf="f.empGender.errors.required">Gender required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Email Address" class="col-sm-3 col-form-label" for="inputEmail">Email
+                            Address*:</label>
+                        <div class="col-sm-9">
+                            <input title="Email Address" formControlName="empEmail" type="email" class="form-control"
+                                id="inputEmail" [ngClass]="{ 'is-invalid': submitted && f.empEmail.errors }">
+                            <div *ngIf="submitted && f.empEmail.errors" class="text-danger">
+                                <span *ngIf="f.empEmail.errors.required">Email Address required</span>
+                                <span *ngIf="f.empEmail.errors.notUnique">Email matching with existing employee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Password" class="col-sm-3 col-form-label" for="inputPassword">Password*:</label>
+                        <div class="col-sm-9">
+                            <input title="Password" formControlName="empPassword" type="password" class="form-control"
+                                id="inputPassword" [ngClass]="{ 'is-invalid': submitted && f.empPassword.errors }"
+                                placeholder="Enter 6 character length password">
+                            <small class="form-text text-muted">Set temporary password for new employee.</small>
+                            <div *ngIf="submitted && f.empPassword.errors" class="text-danger">
+                                <span *ngIf="f.empPassword.errors.required">Password required</span>
+                                <span *ngIf="f.empPassword.errors.minlength">Minimum 5 characters required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Category" class="col-sm-3 col-form-label">Category*:</label>
+                        <div class="col-sm-9">
+                            <select title="Select Category" class="custom-select" formControlName="empCategory">
+                                <option title="Select Any" [ngValue]="null" selected disabled>Select Any</option>
+                                <option title="{{c}}" *ngFor="let c of empCategory">{{c}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.empCategory.errors" class="text-danger">
+                                <span *ngIf="f.empCategory.errors.required">Select Any</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Home Phone" class="col-sm-3 col-form-label" for="homeNumber">Home Phone:</label>
+                        <div class="col-sm-9" [ngClass]="{ 'is-invalid': submitted && f.empHomeNumber.errors }">
+                            <input title="Home Phone" formControlName="empHomeNumber" type="text" class="form-control"
+                                id="homeNumber">
+                            <div *ngIf="submitted && f.empHomeNumber.errors" class="text-danger">
+                                <span *ngIf="f.empHomeNumber.errors.pattern">Enter a valid Home number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Mobile Number" class="col-sm-3 col-form-label" for="phoneNumber">Mobile
+                            Number*:</label>
+                        <div class="col-sm-9">
+                            <input title="Mobile Number" formControlName="empMobileNumber" type="text"
+                                class="form-control" id="phoneNumber"
+                                [ngClass]="{ 'is-invalid': submitted && f.empMobileNumber.errors }">
+                            <div *ngIf="submitted && f.empMobileNumber.errors" class="text-danger">
+                                <span *ngIf="f.empMobileNumber.errors.required">Mobile Number required</span>
+                                <span *ngIf="f.empMobileNumber.errors.pattern">Enter a valid mobile number</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Street Address" class="col-sm-3 col-form-label" for="streetAddress">Street
+                            Address*:</label>
+                        <div class="col-sm-9">
+                            <input title="Street Address" formControlName="empStreet" type="text" class="form-control"
+                                id="streetAddress" [ngClass]="{ 'is-invalid': submitted && f.empStreet.errors }">
+                            <div *ngIf="submitted && f.empStreet.errors" class="text-danger">
+                                <span *ngIf="f.empStreet.errors.required">Street Address required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Suburb & Postcode" class="col-sm-3 col-form-label" for="suburbAndPostcode">Suburb
+                            & Postcode*:</label>
+                        <div class="col-sm-9">
+                            <input title="Suburb & Postcode" formControlName="suburbPostcode" type="text"
+                                class="form-control" id="suburbAndPostcode"
+                                [ngClass]="{ 'is-invalid': submitted && f.suburbPostcode.errors }">
+                            <div *ngIf="submitted && f.suburbPostcode.errors" class="text-danger">
+                                <span *ngIf="f.suburbPostcode.errors.required">Suburb & Postcode required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="State" class="col-sm-3 col-form-label">State*:</label>
+                        <div class="col-sm-9">
+                            <select title="Select State" formControlName="empState" class="custom-select"
+                                [ngClass]="{ 'is-invalid': submitted && f.empState.errors }">
+                                <option title="Select Any" [ngValue]="null" selected disabled>Select Any</option>
+                                <option title="{{state}}" *ngFor="let state of states">{{state}}</option>
+                            </select>
+                            <div *ngIf="submitted && f.empState.errors" class="text-danger">
+                                <span *ngIf="f.empState.errors.required">Select Any</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group row ">
+                        <div class="col-md-6">
+                            <img #imgRef [src]="imageURL" [title]="imageAltText" class="img-thumbnail" height="230"
+                                width="230" [alt]="imageAltText">
+                        </div>
+                        <div class="col-md-4 btn-file">
+                            <span>Choose file</span>
+                            <input #imgSelectRef type="file" title="Click to choose image" class="file" accept="image/*"
+                                (change)="showPreview($event)">
+                            <div class="row del-pic-btn" *ngIf="isHideDeleteBtn">
+                                <button title="Delete picture" type="button" class="btn btn-danger"
+                                    (click)="deletePic()">Delete picture</button>
+                            </div>
+                            <p class="tooltip-img" (click)="hideToolTipOverlay()" *ngIf="isHideTooltip">
+                                <span class="tooltip-img-text px-2 py-1">This is just an preview. To store permanently
+                                    click save from below.
+                                    <br><i><small style="color: #ffc107;"> Click once to close this tooltip</small></i>
+                                </span>
+                            </p>                            
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Tax File No" class="col-sm-3 col-form-label" for="taxFileNO">Tax File No*:</label>
+                        <div class="col-sm-9">
+                            <input title="Tax File No" formControlName="taxNumber" type="text" class="form-control"
+                                id="taxFileNO" [ngClass]="{ 'is-invalid': submitted && f.taxNumber.errors }">
+                            <div *ngIf="submitted && f.taxNumber.errors" class="text-danger">
+                                <span *ngIf="f.taxNumber.errors.required">Tax File No required</span>
+                                <span *ngIf="f.taxNumber.errors.pattern">Enter valid tax file number</span>
+                                <span *ngIf="f.taxNumber.errors.notUnique">Tax File number matching with existing employee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Hourly Rate" class="col-sm-3 col-form-label" for="hourlyRate">Hourly
+                            Rate*:</label>
+                        <div class="col-sm-9">
+                            <input title="Hourly Rate" formControlName="hourRate" type="text" class="form-control"
+                                id="hourlyRate" [ngClass]="{ 'is-invalid': submitted && f.hourRate.errors }">
+                            <div *ngIf="submitted && f.hourRate.errors" class="text-danger">
+                                <span *ngIf="f.hourRate.errors.required">Hourly rate required</span>
+                                <span *ngIf="f.hourRate.errors.pattern">Enter valid Hourly rate</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Penelty 1" class="col-sm-3 col-form-label" for="penelty 1">Penelty 1*:</label>
+                        <div class="col-sm-9">
+                            <input title="Penelty 1" formControlName="peneltyOne" type="text" class="form-control"
+                                id="penelty 1" [ngClass]="{ 'is-invalid': submitted && f.peneltyOne.errors }">
+                            <div *ngIf="submitted && f.peneltyOne.errors" class="text-danger">
+                                <span *ngIf="f.peneltyOne.errors.required">Penelty 1 required</span>
+                                <span *ngIf="f.peneltyOne.errors.pattern">Enter valid Penelty</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label title="Penelty 2" class="col-sm-3 col-form-label" for="penelty 2">Penelty 2*:</label>
+                        <div class="col-sm-9">
+                            <input title="Penelty 2" formControlName="peneltyTwo" type="text" class="form-control"
+                                id="penelty 2" [ngClass]="{ 'is-invalid': submitted && f.peneltyTwo.errors }">
+                            <div *ngIf="submitted && f.peneltyTwo.errors" class="text-danger">
+                                <span *ngIf="f.peneltyTwo.errors.required">Penelty 2 required</span>
+                                <span *ngIf="f.peneltyTwo.errors.pattern">Enter valid Penelty</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-9 offset-sm-3">
+                            <button type="submit" class="btn btn-lg btn-block btn-warning ">
+                                <i class="fa fa-save"></i>&nbsp; Save
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            </button>
+                            <button type="button" class="btn btn-lg btn-block btn-secondary" (click)="reset()">
+                                <i class="fa fa-undo" aria-hidden="true"></i>&nbsp; Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <app-footer></app-footer>
+
+</div>

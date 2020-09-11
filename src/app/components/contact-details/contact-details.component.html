@@ -1,0 +1,82 @@
+<form [formGroup]="contactCheck">
+
+    <!-- Progress bar -->
+    <app-progress-bar [barwidth]="'100%'"></app-progress-bar>
+
+    <!-- // Modal Header -->
+    <div class="modal-header">
+        <h4 class="modal-title">Please provide your contact details</h4>
+        <button type="button" title="Close" class="close" (click)="promptConfirmation('modalContact')">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="form-group row">
+            <label title="Name" for="ct_name" class="col-md-4 col-form-label">Name</label>
+            <div class="col-md-8">
+                <input type="text" title="Name" formControlName="CtName" class="form-control" id="ct_name" placeholder="Name"
+                    [ngClass]="{ 'is-invalid': submitted && f.CtName.errors }" autocomplete="off">
+                <div *ngIf="submitted && f.CtName.invalid" class="text-danger">
+                    <span *ngIf="f.CtName.errors.required">Required</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label title="Email" for="ct_email" class="col-md-4 col-form-label">Email</label>
+            <div class="col-md-8">
+                <input type="email" title="Email" formControlName="CtEmail" class="form-control" id="ct_email" placeholder="Email"
+                    [ngClass]="{ 'is-invalid': submitted && f.CtEmail.errors }" autocomplete="off">
+                <div *ngIf="submitted && f.CtEmail.invalid" class="text-danger">
+                    <span *ngIf="f.CtEmail.errors.required">Required</span>
+                    <span *ngIf="f.CtEmail.errors.email">Enter valid email address</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label title="Mobile" for="ct_number" class="col-md-4 col-form-label">Mobile</label>
+            <div class="col-md-8">
+                <input type="text" title="Mobile" formControlName="ctNumber" class="form-control" id="ct_number"
+                    [ngClass]="{ 'is-invalid': submitted && f.ctNumber.errors }" placeholder="Contact Number"
+                    autocomplete="off">
+                <div *ngIf="submitted && f.ctNumber.invalid" class="text-danger">
+                    <span *ngIf="f.ctNumber.errors.required">Required</span>
+                    <span *ngIf="f.ctNumber.errors.pattern">Enter a valid contact number</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label title="Please select site location" for="ct_site_location" class="col-md-4 col-form-label">
+                Please select site location 
+            </label>
+            <div class="col-md-8">
+                <input type="text" title="Postcode" class="form-control" id="ct_site_location"
+                    [ngClass]="{ 'is-invalid': submitted && f.postcodeControl.errors }" placeholder="Postcode"
+                    [formControl]="postcodeControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngIf="isLoading">
+                        <div>Loading...</div>
+                    </mat-option>
+                    <mat-option *ngIf="noPostcode">
+                        <div>Postcode doesn't exist</div>
+                    </mat-option>
+                    <mat-option class="postcode" *ngFor="let p of filteredPostcodes | async" [value]="p.postcode"
+                        (onSelectionChange)="codeChangePostcode(p, $event)">
+                        {{p.postcode}}, {{p.locality}}, {{p.state}}
+                    </mat-option>                    
+                </mat-autocomplete>
+                <div *ngIf="submitted && f.postcodeControl.invalid" class="text-danger">
+                    <span *ngIf="f.postcodeControl.errors.required">Please enter a postcode</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <!--  // Modal footer -->
+    <div class="modal-footer">
+        <button type="button" title="Back" class="btn btn-link text-decoration-none mr-auto"
+            (click)="prevModal('modalToilet')">Back</button>
+        <button type="button" title="Get Quote" class="btn btn-warning" (click)="next()">Get Quote</button>
+    </div>
+</form>

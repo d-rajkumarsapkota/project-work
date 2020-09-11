@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="signup-form">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+                <h2>Sign Up</h2>
+                <p>Please fill in this form to create an account!</p>
+                <hr>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-paper-plane"></i>
+                            </span>
+                        </div>
+                        <input autofocus type="email" title="Email Address" class="form-control" formControlName="newUserEmail"
+                            placeholder="Email Address" [ngClass]="{ 'is-invalid': submitted && f.newUserEmail.errors }">                        
+                    </div>
+                    <div>
+                        <div *ngIf="submitted && f.newUserEmail.errors" class="text-danger">
+                            <span *ngIf="f.newUserEmail.errors.required">Email required</span>
+                            <span *ngIf="f.newUserEmail.errors.email">Enter a valid email address</span>
+                            <span *ngIf="f.newUserEmail.errors.notUnique">Email already exists</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </div>
+                        <input type="password" title="Password" class="form-control" formControlName="newUserPassword"
+                            placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.newUserPassword.errors }">                        
+                    </div>
+                    <div>
+                        <div *ngIf="submitted && f.newUserPassword.errors" class="text-danger">
+                            <span *ngIf="f.newUserPassword.errors.required">Password required</span>
+                            <span *ngIf="f.newUserPassword.errors.minlength">Password should be minimum 8 digit length</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" [disabled]="loading" title="Sign Up" class="btn btn-primary btn-lg">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Sign Up</button>
+                </div>
+                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+            </form>
+            <div class="text-center">Already have an account? <a title="Login here" routerLink="../login">Login here</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <app-footer></app-footer>
+</div>
+

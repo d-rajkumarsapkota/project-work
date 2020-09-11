@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-3" *ngIf="!isErrorURL">
+    <div class="container">
+        <a href="https://www.myonetec.com/" class="navbar-brand"><span class="text-warning">OneTECH</span> Creations</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" *ngIf="(isAdminAccess || isEmpAccess) && isUser">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a title="Home" class="nav-item nav-link" *ngIf="isUser" routerLinkActive="active" routerLink="/{{rootURL}}/home">Home</a>
+                <ng-container *ngIf="isAdminAccess && isUser">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" [ngClass]="(all.isActive || new.isActive) ? 'active' : 'no'" href="#" 
+                            id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Employee
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" routerLinkActive="active" #all="routerLinkActive" routerLink="/{{rootURL}}/emp/all">View all</a>
+                          <a class="dropdown-item" routerLinkActive="active" #new="routerLinkActive" routerLink="/{{rootURL}}/emp/new">Add new</a>
+                        </div>
+                      </li>
+                </ng-container>
+            </div>
+
+            <div class="navbar-nav ml-auto" *ngIf="isAdminAccess || isEmpAccess">
+                <a title="Login"  class="nav-item nav-link" routerLinkActive="active" *ngIf="!isUser" routerLink="/{{rootURL}}/login">Login</a>
+                <a title="Logout" class="nav-item nav-link" routerLinkActive="active" (click)=logout() *ngIf="isUser">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,139 @@
+////////////////////////////////////
+//  post man test query for api  //
+//////////////////////////////////
+{
+	"username": "raj",
+	"email": "raj@gmail.com",
+	"contactNumber": "0123456789",
+	"siteLocation": "3000, Melbourne, VIC"
+}
+
+/////////////////////////////////////////////////
+////  DATABASE QUERY USED TO CREATE TABLES  ////
+///////////////////////////////////////////////
+
+CREATE TABLE `public_users` (
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `contact_number` varchar(20) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `site_location` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `public_user_quotations` (
+  `quote_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `facility` varchar(45) NOT NULL,
+  `freq_of_cleaning` varchar(45) NOT NULL,
+  `gross_area` varchar(45) NOT NULL,
+  `shower_count` varchar(45) NOT NULL,
+  `toilet_count` varchar(45) NOT NULL,
+  PRIMARY KEY (`quote_id`),
+  UNIQUE KEY `quote_id_UNIQUE` (`quote_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `employees` (
+  `emp_user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `emp_number` varchar(45) DEFAULT NULL,
+  `first_name` varchar(45) DEFAULT NULL,
+  `last_name` varchar(45) DEFAULT NULL,
+  `username` varchar(16) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `role` varchar(20) DEFAULT NULL,
+  `profile_picture_name` varchar(100) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT '0',
+  `home_number` varchar(45) DEFAULT NULL,
+  `mobile_number` varchar(45) DEFAULT NULL,
+  `street_address` varchar(45) DEFAULT NULL,
+  `suburb_postcode` varchar(45) DEFAULT NULL,
+  `state` varchar(45) DEFAULT NULL,
+  `verify_token` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`emp_user_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`emp_user_id`),
+  UNIQUE KEY `emp_number_UNIQUE` (`emp_number`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+CREATE TABLE `employee_trade_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_user_id` int(11) DEFAULT NULL,
+  `emp_number` varchar(15) DEFAULT NULL,
+  `tax_file_no` varchar(20) DEFAULT NULL,
+  `hourly_rate` varchar(10) DEFAULT NULL,
+  `penelty_1` varchar(10) DEFAULT NULL,
+  `penelty_2` varchar(10) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tax_file_no_UNIQUE` (`tax_file_no`),
+  UNIQUE KEY `emp_number_UNIQUE` (`emp_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `employee_trade_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_user_id` int(11) DEFAULT NULL,
+  `emp_number` varchar(45) DEFAULT NULL,
+  `tax_file_no` varchar(20) DEFAULT NULL,
+  `hourly_rate` varchar(10) DEFAULT NULL,
+  `penelty_1` varchar(10) DEFAULT NULL,
+  `penelty_2` varchar(10) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tax_file_no_UNIQUE` (`tax_file_no`),
+  UNIQUE KEY `emp_number_UNIQUE` (`emp_number`),
+  KEY `emp_number_idx` (`emp_number`),
+  CONSTRAINT `emp_number` FOREIGN KEY (`emp_number`) REFERENCES `employees` (`emp_number`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
+/////////////////////////////////////////////////
+///// To generate radmon key from powershell ////
+/////////////////////////////////////////////////
+cmd> node  (hit enter)
+cmd> require('crypto').randomBytes(64).toString('hex')
+-Instead of 64, you can give 32 or 16 or 8 which will generate that much length randomBytes
+
+
+/////////////////////////////////////////////////
+//////////////  PACKAGE INSTALLED  ////////////// 
+/////////////////////////////////////////////////
+
+-create folder inside project as server
+-navigate inside that folder (server)
+-run npm init
+-Fill the basic questions asked when running the npm init
+-With in the command prompt in the server directory enter the below package 
+
+npm install --save express dotenv cors body-parser mysql nodemailer bcrypt jsonwebtoken
++ cors@2.8.5
++ body-parser@1.19.0
++ mysql@2.18.1
++ express@4.17.1
++ dotenv@8.2.0
++ nodemailer@6.4.11
++ bcrypt@5.0.0
++ jsonwebtoken@8.5.1
++ multer@1.4.2 // To access multipart form data
+
+npm install --save-dev nodemon
++ nodemon@2.0.4
+

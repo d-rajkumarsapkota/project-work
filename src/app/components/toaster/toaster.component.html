@@ -1,0 +1,12 @@
+<div role="alert" class="toast success-toast" aria-live="assertive" aria-atomic="true" *ngIf="isShowToast">
+    <div class="toast-header text-white" [ngClass]=bgColor>
+      <span [ngClass]="titleIcon"></span>&nbsp;
+      <strong class="mr-auto"><span>{{titleTxt}}</span></strong>
+      <button type="button" title="Close" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" (click)="isShowToast=false">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">
+      <p>{{bodyTxt}}</p>
+    </div>
+</div>

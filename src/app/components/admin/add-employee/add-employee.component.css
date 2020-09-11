@@ -1,0 +1,89 @@
+.tooltip-img {
+    /* position: relative;     */
+    margin-top: 12vh;
+}
+
+.del-pic-btn {
+    margin-top: 19px;
+    margin-left: 1px;
+}
+
+.tooltip-img .tooltip-img-text {
+    width: 120px;
+    background-color: #54575c;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -34px;
+    left: -15px;
+}
+
+.tooltip-img .tooltip-img-text::after {
+    content: " ";
+    position: absolute;
+    bottom: 60%;
+    right: 100%;
+    margin-left: -5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #54575c transparent transparent transparent;
+    transform: rotate(90deg);
+}
+
+.btn-file {
+    padding:5px 10px;
+    background: #ffc107;
+    border:1px solid #ffc107;
+    position:relative;
+    /* color:#fff; */
+    border-radius:20px;
+    text-align:center;
+    float:left;
+    cursor:pointer;
+    max-height: 40px;
+}
+
+.btn-file:hover, .btn-file:focus {
+    background: #e6b727 !important;
+}
+
+.file {
+    position: absolute;
+    z-index: 1000;
+    opacity: 0;
+    cursor: pointer;
+    right: 0;
+    top: 0;
+    height: 100%;
+    font-size: 24px;
+    width: 100%;
+}
+
+::-webkit-file-upload-button {
+    cursor: pointer;    
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .tooltip-img {
+        position: absolute;
+        margin-left: 225px;
+        margin-top: -74%;
+    }
+
+    .tooltip-img .tooltip-img-text {
+        width: 120px;
+        background-color: #54575c;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        top: -34px;
+        left: -73px;
+    }    
+  }

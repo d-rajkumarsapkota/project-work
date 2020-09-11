@@ -1,0 +1,10 @@
+.success-toast {
+    position: absolute;
+    top: 17%;
+    right: 2%;
+    width: 25%;  
+  }
+  
+.toast {
+    opacity: 1;
+}

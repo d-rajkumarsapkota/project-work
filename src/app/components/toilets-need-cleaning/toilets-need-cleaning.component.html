@@ -1,0 +1,39 @@
+<form [formGroup]="toiletCheck">
+
+  <!-- Progress bar -->
+  <app-progress-bar [barwidth]="'80%'"></app-progress-bar>
+
+  <!-- // Modal Header -->
+  <div class="modal-header">
+    <h4 class="modal-title">How many toilets / urinals need cleaning?</h4>
+    <button type="button" title="Close" class="close" (click)="promptConfirmation('modalToilet')">&times;</button>
+  </div>
+
+  <!-- Modal body -->
+  <div class="modal-body">
+    <div *ngIf="submitted && f.toilet.invalid" class="alert alert-danger">
+      <div *ngIf="f.toilet.errors.required">Please select an option</div>
+    </div>
+    <fieldset class="form-group">
+      <div class="row py-2" *ngFor="let t of noOfToilets">
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input title="{{t.toilet}}" class="form-check-input" id="{{t.toilet}}" type="radio" formControlName="toilet"
+              [ngClass]="{ 'is-invalid': submitted && f.toilet.errors }" (change)="changeToilet(t.toilet)"
+              value="{{t.toilet}}">
+            <label title="{{t.toilet}}" class="form-check-label" for="{{t.toilet}}">
+              {{t.toilet}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <!--  // Modal footer -->
+  <div class="modal-footer">
+    <button type="button" title="Back" class="btn btn-link text-decoration-none mr-auto"
+      (click)="prevModal('modalShower')">Back</button>
+    <button type="button" title="Continue" class="btn btn-warning" (click)="nextModal('modalContact')">Continue</button>
+  </div>
+</form>

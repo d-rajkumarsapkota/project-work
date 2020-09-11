@@ -1,0 +1,108 @@
+<div class="container-fluid mt-5">
+    <div class="jumbotron">
+        <div class="alert alert-success alert-dismissible" *ngIf="addSuccess">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> New employee added.
+        </div>
+        <div class="alert alert-success alert-dismissible" *ngIf="success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success! Employee details updated. </strong>
+        </div>
+        <div class="alert alert-success alert-dismissible" *ngIf="deleteSuccess">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success! Employee deleted. </strong>
+        </div>
+        <table #allEmployees class="display cell-border compact" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Employee No</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Mobile Number</th>
+                    <th>Street Address</th>
+                    <th>Suburb & postcode</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataSet; index as i" class="" #rowi>                    
+                    <td>{{data.emp_number}}</td>
+                    <td>{{data.first_name}}</td>
+                    <td>{{data.last_name}}</td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.active}}</td>
+                    <td>{{data.mobile_number}}</td>
+                    <td>{{data.street_address}}</td>
+                    <td>{{data.suburb_postcode}}</td>
+                    <td>{{data.state}}</td>
+                    <td>
+                        <span>
+                            <a routerLink="../{{data.emp_number}}" routerLinkActive="active" style="text-decoration: none; color: black;">
+                                <i class="fa fa-pencil-square-o px-3" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                        <span style="cursor: pointer;" (click)="click(data, rowi)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                    </td>                    
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Employee No</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Mobile Number</th>
+                    <th>Street Address</th>
+                    <th>Suburb & postcode</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- This modal should trigger when user click on close icon from questionarries modal -->
+<div class="modal fade" tabindex="-1" role="dialog" #preCloseModal>
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">      
+            <div class="modal-body">
+                <h4 class="modal-title border-warning border-bottom pb-1 mb-2">Are you sure you want to delete?</h4>
+                <div class="container">                  
+                    <div class="row">
+                        <label for="staticEmployeeNo" class="col-sm-4 col-form-label">Employee No</label>
+                        <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmployeeNo" value="{{this.modalData?.emp_number}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="staticEmail" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{this.modalData?.email}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="staticFirstName" class="col-sm-4 col-form-label">First Name</label>
+                        <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="staticFirstName" value="{{this.modalData?.first_name}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="staticLastName" class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" id="staticLastName" value="{{this.modalData?.last_name}}">
+                        </div>
+                    </div>                   
+                </div>
+            </div> 
+            <div class="modal-footer">
+                <button type="button" title="Yes" class="btn btn-danger mr-auto" (click)="yesDelEmp()">Yes</button>
+                <button type="button" title="No" class="btn btn-link btn-link text-decoration-none" (click)="noDelEmp()">NO</button>
+            </div>     
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<form [formGroup]="reqQuoteCheck">
+  <div class="container">
+      <div class="jumbotron jumbotron-fluid">
+          <div class="get-quote-container">
+              <h2>Request a quote for your facility</h2>
+              <h5>Let's get started</h5>
+              <div class="row">
+                  <div class="form-group col-md-6">
+                      <select
+                        tabindex="1"
+                        title="Select cleaning premises" 
+                        class="form-control" 
+                        formControlName="selectFacility" 
+                        [ngClass]="{ 'is-invalid': isFormSubmitted && f.selectFacility.errors }"
+                        (change)="changeFac($event.target.value)">
+                          <option title="Select cleaning premises" [ngValue]="null" selected disabled>Select cleaning premises</option>
+                          <option title="{{facility.name}}" *ngFor="let facility of facilities">{{facility.name}}</option>
+                      </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                      <button type="button" tabindex="2" title="Start" class="btn btn-warning btn-block" (click)="openModal()">
+                        <i class="fa fa-hourglass-start" aria-hidden="true"></i> &nbsp; Start
+                      </button>   
+                  </div>
+              </div> 
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <div *ngIf="isFormSubmitted && f.selectFacility.invalid" class="alert alert-danger">
+                    <div *ngIf="f.selectFacility.errors.required">Please select an option</div>
+                  </div>
+                </div>
+              </div>  
+          </div>
+      </div>
+      <app-footer></app-footer>
+  </div>  
+    
+
+  <!-- Toaster container -->
+  <!-- 
+    To display success or unsuccess toast based on status of
+    quote submission 
+  -->
+  <ng-container *ngIf=isShowToast>
+    <app-toaster [showQuote]="isQuoteSubmittedSuccess"></app-toaster>
+  </ng-container>    
+  
+</form>
+
+
+
+<!-- Common modal for displaying various questions to the user -->
+<!-- Various question here are different angular components -->
+<!-- 
+  Based on the user back and forth movement various modals are displayed
+  *ngIf condition to decide which modal to show first - modalFreq will always be first
+  (next) / (prev) function decide which modal to hide and which modal to show
+ -->
+<div class="modal fade" id="myModal" 
+    #genModal 
+    tabindex="-1" 
+    role="dialog" 
+    aria-labelledby="Questions modal">
+  <div class="modal-dialog modal-dialog-centered  modal-lg ">
+    <div class="modal-content">      
+      <app-freq-of-cleaning  *ngIf="modals.modalFreq" (next)="toogleComponent(MODAL_TWO, MODAL_ONE)"></app-freq-of-cleaning>        
+      <app-area-need-cleaning *ngIf="modals.modalArea" (prev)="toogleComponent(MODAL_ONE, MODAL_TWO)" 
+        (next)="toogleComponent(MODAL_THREE, MODAL_TWO)">
+      </app-area-need-cleaning>        
+      <app-showers-need-cleaning *ngIf="modals.modalShower" (prev)="toogleComponent(MODAL_TWO, MODAL_THREE)" 
+        (next)="toogleComponent(MODAL_FOUR, MODAL_THREE)">
+      </app-showers-need-cleaning>  
+      <app-toilets-need-cleaning *ngIf="modals.modalToilet" (prev)="toogleComponent(MODAL_THREE, MODAL_FOUR)" 
+        (next)="toogleComponent(MODAL_FIVE, MODAL_FOUR)">
+      </app-toilets-need-cleaning>
+      <app-contact-details *ngIf="modals.modalContact" (prev)="toogleComponent(MODAL_FOUR, MODAL_FIVE)" ></app-contact-details>
+    </div>
+  </div>  
+</div>
+
+
+<!-- This modal should trigger when user click on close icon from questionarries modal -->
+<div class="modal fade" tabindex="-1" role="dialog" #preCloseModal>
+  <div class="modal-dialog" role="dialog">
+    <div class="modal-content">      
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <h4 class="modal-title">Are you sure you want to leave?</h4>
+          </div>
+        </div>
+      </div> 
+      <div class="modal-footer">
+        <button type="button" title="Yes" class="btn btn-link text-decoration-none mr-auto" (click)="exitFromOpenModal()">Yes</button>
+        <button type="button" title="Continue" class="btn btn-warning" (click)="ContinueWithOpenModal()">Continue</button>
+      </div>     
+    </div>
+  </div>
+</div>
+
+
+<!-- Loding spinner content -->
+<div class="spinner" *ngIf=spinner>
+  <div class="load-class">Loading</div>
+</div>

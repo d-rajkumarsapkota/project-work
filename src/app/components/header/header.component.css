@@ -1,0 +1,13 @@
+/* 
+    With out href pointer cursor won't be shown
+    But if you added href="#" or href, onclick page will navigate to default page
+    which breaks flow of angular navigation 
+    Forefully adding pointer cursor to links
+ */
+a.nav-item.nav-link {
+    cursor: pointer;
+}
+
+a.nav-item.nav-link:hover {
+    color: white;
+}
